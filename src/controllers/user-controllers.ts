@@ -31,7 +31,7 @@ export const userSignUp = async (req: Request, res: Response, next: NextFunction
 
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "https://mern-chat-backend-5.onrender.com/", // Replace with your actual domain
+            domain: "mern-chat-backend-5.onrender.com", // Replace with your actual domain
             expires,
             httpOnly: true,
             signed: true,
@@ -64,7 +64,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
 
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "https://mern-chat-backend-5.onrender.com/", // Replace with your actual domain
+            domain: "mern-chat-backend-5.onrender.com", // Replace with your actual domain
             expires,
             httpOnly: true,
             signed: true,
@@ -96,7 +96,7 @@ export const userLogout = async (req: Request, res: Response, next: NextFunction
     try {
         res.clearCookie(COOKIE_NAME, {
             path: "/",
-            domain: "https://mern-chat-backend-5.onrender.com/", // Replace with your actual domain
+            domain: "mern-chat-backend-5.onrender.com", // Replace with your actual domain
             sameSite: 'none',
             secure: true, // Ensure you use HTTPS in production
         });
