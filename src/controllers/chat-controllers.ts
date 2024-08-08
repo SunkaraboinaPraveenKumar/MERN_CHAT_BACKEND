@@ -63,7 +63,7 @@ export const generateChatCompletion = async (
     } else {
       console.warn("No valid candidates found in response.");
     }
-
+    user.chats.push({ role: "user", content: message });
     // Add the assistant response to the chat history
     user.chats.push({ role: "assistant", content: assistantResponse });
 
