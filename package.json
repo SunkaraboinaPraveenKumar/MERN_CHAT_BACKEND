@@ -2,10 +2,10 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npx tsc --watch\" \"npx nodemon -q dist/index.js\"",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -15,7 +15,6 @@
   "dependencies": {
     "@google/generative-ai": "^0.15.0",
     "bcrypt": "^5.1.0",
-    "concurrently": "^8.2.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -33,8 +32,9 @@
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^20.4.8",
-    "nodemon": "^3.1.4",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",
-    "typescript": "^5.5.4"
+    "typescript": "^5.1.6"
   }
 }
