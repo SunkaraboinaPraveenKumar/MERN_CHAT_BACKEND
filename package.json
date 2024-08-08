@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "prepare": "npm run build",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
+    "dev": "npx concurrently \"npx tsc --watch\" \"npx nodemon -q dist/index.js\"",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "render-build": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
