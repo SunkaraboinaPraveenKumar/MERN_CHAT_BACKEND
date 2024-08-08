@@ -79,7 +79,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
-export const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
+export const verfiyUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await User.findById(res.locals.jwtData.id);
         if (!user) {
