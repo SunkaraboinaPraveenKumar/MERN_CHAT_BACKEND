@@ -4,6 +4,20 @@ import { hash, compare } from 'bcrypt';
 import { createToken } from '../utils/token-manager.js';
 import { COOKIE_NAME } from '../utils/constants.js';
 
+// Helper function to dynamically determine the domain
+const getDomain = (req: Request): string => {
+    const host = req.hostname; // Alternatively, use req.headers.host
+    if (host.includes('localhost')) {
+        return 'localhost';
+    } else if (host.includes('mern-chat-backend-5.onrender.com')) {
+        return 'mern-chat-backend-5.onrender.com';
+    } else if (host.includes('mern-chat-backend-delta.vercel.app')) { // Add more domains here
+        return 'mern-chat-backend-delta.vercel.app';
+    }
+    return host; // Default to the host if nothing matches
+};
+
+// Get all users
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const users = await User.find();
@@ -14,6 +28,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
     }
 };
 
+// User signup
 export const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { name, email, password } = req.body;
@@ -29,9 +44,11 @@ export const userSignUp = async (req: Request, res: Response, next: NextFunction
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
 
+        const domain = getDomain(req); // Dynamically get the domain
+
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "mern-chat-backend-5.onrender.com", // Replace with your actual domain
+            domain, // Use dynamic domain
             expires,
             httpOnly: true,
             signed: true,
@@ -46,6 +63,7 @@ export const userSignUp = async (req: Request, res: Response, next: NextFunction
     }
 };
 
+// User login
 export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
@@ -62,9 +80,11 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
 
+        const domain = getDomain(req); // Dynamically get the domain
+
         res.cookie(COOKIE_NAME, token, {
             path: "/",
-            domain: "mern-chat-backend-5.onrender.com", // Replace with your actual domain
+            domain, // Use dynamic domain
             expires,
             httpOnly: true,
             signed: true,
@@ -79,6 +99,7 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
+// Verify user from token
 export const verfiyUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = await User.findById(res.locals.jwtData.id);
@@ -92,14 +113,18 @@ export const verfiyUser = async (req: Request, res: Response, next: NextFunction
     }
 };
 
+// User logout
 export const userLogout = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        const domain = getDomain(req); // Dynamically get the domain
+
         res.clearCookie(COOKIE_NAME, {
             path: "/",
-            domain: "mern-chat-backend-5.onrender.com", // Replace with your actual domain
+            domain, // Use dynamic domain
             sameSite: 'none',
             secure: true, // Ensure you use HTTPS in production
         });
+
         return res.status(200).json({ message: 'ok' });
     } catch (error) {
         console.log(error);
